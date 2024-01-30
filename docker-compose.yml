@@ -1,0 +1,11 @@
+services:
+
+  app:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      # à gauche la machine hôte, à droite le container
+      - 5000:5000
+    volumes:
+      - ./:/usr/src/app
