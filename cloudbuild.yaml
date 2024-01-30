@@ -4,7 +4,7 @@ steps:
   # installation des dépendances test commit isaac
   - name: python
     entrypoint: pip
-    args: ["install", "-r", "modules/4.3/example1/requirements.txt", "--user"]
+    args: ["install", "-r", "requirements.txt", "--user"]
     id: "Install"
 
     # ! test
