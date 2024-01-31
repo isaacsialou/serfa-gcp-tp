@@ -1,43 +1,39 @@
 steps:
 
   # ! build
-  # installation des dépendances test commit isaac
-  - name: python
+  # installation des dépendances 
+  # un "builder" est un container avec certaines dépendances pré installées
+  - name: python # nom du "builder"
+    # nom du programme en entrée pour cette étape de pipeline
     entrypoint: pip
     args: ["install", "-r", "requirements.txt", "--user"]
-    id: "Install"
+    id: "installation des dépendances"
 
     # ! test
-    # TODO
-    - name: python
-      entrypoint: python
-      args: ["-m", "pytest"]
-      id: "Test"
+  - name: python
+    # nom du programme en entrée pour cette étape de pipeline
+    entrypoint: python
+    args: ["-m", "pytest"]
+    id: "test de l'application"
 
     # ! deploy
-    # TODO build l'image Docker de l'application
-    # ce ficher doit être joué dans Cloud Build (chemins relatifs partant de la racine du repo)
-DEPython : 3.12.1
-
-# permet de streamer les logs du conteneur sur des plateformes KNative
-ENV PYTHONUNBUFFERED Vrai
-
-RÉP TRAVAIL /usr/src/app
-
-COPIER ./requirements.txt ./
-
-EXÉCUTER pip install --upgrade pip
-EXÉCUTER pip install --no-cache-dir -r conditions.txt
-
-COPIE . .
-
-# cette fois-ci on compile l'application en mode production
-ENV FLASK_APP=app.py  
-ENV FLASK_ENV=production
-
-# permet de constater que l'on est bien dans le Dockerfile de prod
-RUN echo "HEY IM THE PROD DOCKERFILE"
-
-# serveur de production;
-# 8 threads par travailleur, 1 travailleur par CPU, 0 secondes de timeout pour permettre à Cloud Run de gérer le scaling
-CMD exec gunicorn --bind :5000 --workers 1 --threads 8 --timeout 0 'app:create_app()'
+  # build l'image Docker de l'application
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "europe-west1-docker.pkg.dev/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA",
+        "-f",
+        "prod.Dockerfile",
+        ".",
+      ]
+    id: Build
+  # push de l'image sur Google Artifact Registry
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "europe-west1-docker.pkg.dev/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA"
+    id: Push
+    
+    # TODO deployer cette image en tant que service Cloud Run
