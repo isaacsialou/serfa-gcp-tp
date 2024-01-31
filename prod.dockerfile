@@ -1,22 +1,4 @@
-steps:
-
-  # ! build
-  # installation des dépendances test commit isaac
-  - name: python
-    entrypoint: pip
-    args: ["install", "-r", "requirements.txt", "--user"]
-    id: "Install"
-
-    # ! test
-    # TODO
-    - name: python
-      entrypoint: python
-      args: ["-m", "pytest"]
-      id: "Test"
-
-    # ! deploy
-    # TODO build l'image Docker de l'application
-    # ce ficher doit être joué dans Cloud Build (chemins relatifs partant de la racine du repo)
+# ce ficher doit être joué dans Cloud Build (chemins relatifs partant de la racine du repo)
 DEPython : 3.12.1
 
 # permet de streamer les logs du conteneur sur des plateformes KNative
