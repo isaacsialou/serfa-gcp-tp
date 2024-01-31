@@ -37,3 +37,19 @@ steps:
     id: Push
     
     # TODO deployer cette image en tant que service Cloud Run
+      identifiant : Push
+
+    # TODO déployer cette image en tant que service Cloud Run
+  # déployé sur Google Cloud Run
+  - nom : " gcr.io/google.com/cloudsdktool/cloud-sdk:slim "
+    arguments :
+      - courir
+      - prestations de service
+      - mise à jour
+      - serfa-gcp-tp
+      - " --platform=géré "
+      - " --image=europe-west1-docker.pkg.dev/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA "
+      - " --region=europe-west1 "
+      - " --calme "
+    identifiant : Déployer
+    point d'entrée : gcloud
