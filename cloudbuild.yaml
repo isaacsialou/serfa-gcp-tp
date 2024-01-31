@@ -9,6 +9,10 @@ steps:
 
     # ! test
     # TODO
+    - name: python
+      entrypoint: python
+      args: ["-m", "pytest"]
+      id: "Test"
 
     # ! deploy
     # TODO
