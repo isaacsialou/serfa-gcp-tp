@@ -48,7 +48,7 @@ steps:
       - mise à jour
       - serfa-gcp-tp
       - " --platform=géré "
-      - " --image=europe-west1-docker.pkg.dev/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA "
+      - "europe-west1-docker.pkg.dev/airy-boulevard-412810/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA "
       - " --region=europe-west1 "
       - " --calme "
     identifiant : Déployer
