@@ -37,7 +37,6 @@ steps:
     id: Push
     
     # TODO déployer cette image en tant que service Cloud Run
-      identifiant : Push
 
     # TODO déployer cette image en tant que service Cloud Run
   # déployé sur Google Cloud Run
