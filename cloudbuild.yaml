@@ -29,7 +29,7 @@ steps:
         ".",
       ]
     id: Build
-  # push de l'image sur Google Artifact Registry
+  # push de l'image sur Google Artifact Registry 
   - name: gcr.io/cloud-builders/docker
     args:
       - push
