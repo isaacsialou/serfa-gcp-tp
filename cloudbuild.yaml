@@ -36,7 +36,7 @@ steps:
       - "/flasksample:$SHORT_SHA"
     id: Push
     
-    # TODO deployer cette image en tant que service Cloud Run
+    # TODO déployer cette image en tant que service Cloud Run
       identifiant : Push
 
     # TODO déployer cette image en tant que service Cloud Run
