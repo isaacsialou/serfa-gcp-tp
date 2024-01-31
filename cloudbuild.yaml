@@ -49,7 +49,7 @@ steps:
       - serfa-gcp-tp
       - "--platform=managed"
       - "--port=5000"
-      - "europe-west1-docker.pkg.dev/airy-boulevard-412810/serfa-gcp-tp/flasksample:$SHORT_SHA"
+      - "--image=europe-west1-docker.pkg.dev/airy-boulevard-412810/serfa-gcp-tp/flasksample:$SHORT_SHA"
       - "--region=europe-west1"
       - "--quiet"
     id: Deploy
