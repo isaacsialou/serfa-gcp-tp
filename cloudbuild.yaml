@@ -23,7 +23,7 @@ steps:
       [
         "build",
         "-t",
-        "europe-west1-docker.pkg.dev/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA",
+        "europe-west1-docker.pkg.dev/airy-boulevard-412810/serfa-gcp/flasksample:$SHORT_SHA",
         "-f",
         "prod.dockerfile",
         ".",
@@ -33,7 +33,7 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args:
       - push
-      - "europe-west1-docker.pkg.dev/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA"
+      - "europe-west1-docker.pkg.dev/airy-boulevard-412810/serfa-gcp/flasksample:$SHORT_SHA"
     id: Push
     
     # TODO deployer cette image en tant que service Cloud Run
