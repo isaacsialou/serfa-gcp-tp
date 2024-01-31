@@ -25,7 +25,7 @@ steps:
         "-t",
         "europe-west1-docker.pkg.dev/serfa-gcp/$REPO_NAME/flasksample:$SHORT_SHA",
         "-f",
-        "prod.Dockerfile",
+        "prod.dockerfile",
         ".",
       ]
     id: Build
