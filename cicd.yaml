@@ -16,6 +16,7 @@ jobs:
                 echo "BUILD AND TEST"
                 docker build -t serfagcp:latest .
                 docker run serfagcp:latest bash -c "python -m pytest"
+                
     # CONTINUOUS DEPLOYMENT
     push-image-to-gar:
       runs-on: ubuntu-latest
