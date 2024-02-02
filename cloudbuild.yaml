@@ -25,20 +25,17 @@ steps:
         "-t",
         "europe-west1-docker.pkg.dev/airy-boulevard-412810/serfa-gcp/flasksample:$SHORT_SHA",
         "-f",
-        "prod.dockerfile",
+        "prod.Dockerfile",
         ".",
       ]
     id: Build
-  # push de l'image sur Google Artifact Registry 
+  # push de l'image sur Google Artifact Registry
   - name: gcr.io/cloud-builders/docker
     args:
       - push
       - "europe-west1-docker.pkg.dev/airy-boulevard-412810/serfa-gcp/flasksample:$SHORT_SHA"
     id: Push
     
-    # TODO déployer cette image en tant que service Cloud Run
-
-
     # TODO deployer cette image en tant que service Cloud Run
   # déploiement sur Google Cloud Run
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
