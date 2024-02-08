@@ -1,36 +1,25 @@
-# on récupère depuis Dockerhub une image de base de Python
-# IMAGE:TAG => le tag est l'identifiant unique de la version de l'image
+# ce ficher doit être joué dans Cloud Build (chemins relatifs partant de la racine du repo)
 FROM python:3.12.1
 
-RUN apt install -y curl
+# permet de streamer les logs du container sur des plateformes KNative
+ENV PYTHONUNBUFFERED True
 
-#  docker build -t hello-world .
-# cette commande veut dire "construis cette image Docker";
-# le `-t` signifie "tag", c'est à dire le nom de votre image;
-# le `.` à la fin signifie "dans le dossier courant"
-
-# pour exécuter un terminal dans notre running container =>
-# 1) run le container avec un programme => docker run -it hello-world PROGRAMME
-# 2) exécuter un terminal bash dans le container => docker exec -it hello-world bash
-
-# on `run` des images et on `exec` des containers
-
-# ici on récupère les dépendances de notre projet,
-# en les copiant dans le dossier courant
 WORKDIR /usr/src/app
-COPY ./requirements.txt .
 
-# on installe les dépendances
-RUN pip install -r requirements.txt
+COPY ./requirements.txt ./
 
-# on va copier le code de l'applicatreion
-COPY ./app.py .
-COPY ./test_app.py .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
-# on met en place les variables d'environnement pour le debug
-ENV FLASK_ENV=development
-ENV FLASK_APP=app.py   
+COPY . .
 
-# `CMD` signifie "lance cette commande quand le container est lancé"
-# `sh -c` => "j'ouvre une shell et je lui passe la commande suivante"
-CMD ["sh", "-c", "flask run --host=0.0.0.0"]
+# cette fois-ci on compile l'application en mode production
+ENV FLASK_APP=app.py  
+ENV FLASK_ENV=production
+
+# permet de constater que l'on est bien dans le Dockerfile de prod
+RUN echo "HEY IM THE PROD DOCKERFILE"
+
+# serveur de production;
+# 8 threads par worker, 1 worker par CPU, 0 secondes de timeout pour permettre à Cloud Run de gérer le scaling
+CMD exec gunicorn --bind :5000 --workers 1 --threads 8 --timeout 0 'app:create_app()'
